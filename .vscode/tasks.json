@@ -1,0 +1,42 @@
+{
+    "version": "2.0.0",
+    "command": "",
+    "args": [],
+    "tasks": [
+        {
+            "label": "Build",
+            "type": "shell",
+            "command": "odin build ${relativeFileDirname} -debug -out:build/${relativeFileDirname}",
+            "windows": {
+                "command": "odin build ${relativeFileDirname} -debug -out:build\\${relativeFileDirname}.exe"
+            },
+            "group": "build"
+        },
+        {
+            "label": "Run",
+            "type": "shell",
+            "command": "odin run . -out:../build/${relativeFileDirname}",
+            "options": {
+                "cwd": "${relativeFileDirname}"
+            },
+            "windows": {
+                "command": "odin run . -out:..\\build\\${relativeFileDirname}"
+            },
+            "problemMatcher": [],
+            "group": "none"
+        },
+        {
+            "label": "Test",
+            "type": "shell",
+            "command": "odin test . -debug -define:ODIN_TEST_SHORT_LOGS=true -out:../build/${relativeFileDirname}-tests",
+            "options": {
+                "cwd": "${relativeFileDirname}"
+            },
+            "windows": {
+                "command": "odin test . -debug -define:ODIN_TEST_SHORT_LOGS=true -out:..\\build\\${relativeFileDirname}-tests.exe"
+            },
+            "problemMatcher": [],
+            "group": "test"
+        }
+    ]
+}
