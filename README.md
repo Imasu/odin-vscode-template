@@ -2,4 +2,5 @@ Template pour les projets [Odin](https://odin-lang.org/) pour une utilisation da
 - Paramétrage du debugger `LLDB`  
 - Paramétrage de l'extension `Odin Language`  
 
+<br><br><br>
 Inspiré de [GitHub - Riari/odin-aoc-vscode-template: A template for doing Advent of Code in Odin with VS Code.](https://github.com/Riari/odin-aoc-vscode-template)
