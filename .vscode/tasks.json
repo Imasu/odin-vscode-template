@@ -6,21 +6,24 @@
         {
             "label": "Build",
             "type": "shell",
-            "command": "odin build ${relativeFileDirname} -debug -out:build/${relativeFileDirname}",
+            "command": "odin build . -debug -vet -strict-style -out:../build/${relativeFileDirname}-debug",
+            "options": {
+                "cwd": "${relativeFileDirname}"
+            },
             "windows": {
-                "command": "odin build ${relativeFileDirname} -debug -out:build\\${relativeFileDirname}.exe"
+                "command": "odin build . -debug -out:..\\build\\${relativeFileDirname}-debug.exe"
             },
             "group": "build"
         },
         {
             "label": "Run",
             "type": "shell",
-            "command": "odin run . -out:../build/${relativeFileDirname}",
+            "command": "odin run . -vet -strict-style -out:../build/${relativeFileDirname}",
             "options": {
                 "cwd": "${relativeFileDirname}"
             },
             "windows": {
-                "command": "odin run . -out:..\\build\\${relativeFileDirname}"
+                "command": "odin run . -vet -strict-style -out:..\\build\\${relativeFileDirname}"
             },
             "problemMatcher": [],
             "group": "none"
@@ -28,12 +31,12 @@
         {
             "label": "Test",
             "type": "shell",
-            "command": "odin test . -debug -define:ODIN_TEST_SHORT_LOGS=true -out:../build/${relativeFileDirname}-tests",
+            "command": "odin test . -debug -vet -strict-style -define:ODIN_TEST_SHORT_LOGS=true -out:../build/${relativeFileDirname}-tests",
             "options": {
                 "cwd": "${relativeFileDirname}"
             },
             "windows": {
-                "command": "odin test . -debug -define:ODIN_TEST_SHORT_LOGS=true -out:..\\build\\${relativeFileDirname}-tests.exe"
+                "command": "odin test . -debug -vet -strict-style -define:ODIN_TEST_SHORT_LOGS=true -out:..\\build\\${relativeFileDirname}-tests.exe"
             },
             "problemMatcher": [],
             "group": "test"
