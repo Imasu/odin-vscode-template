@@ -6,7 +6,7 @@
             "type": "lldb",
             "request": "launch",
             "preLaunchTask": "Build",
-            "program": "${workspaceFolder}/build/${relativeFileDirname}",
+            "program": "${workspaceFolder}/build/${relativeFileDirname}-debug",
             "args": [],
             "cwd": "${fileDirname}"
         },
@@ -23,7 +23,7 @@
             "type": "cppvsdbg",
             "request": "launch",
             "preLaunchTask": "Build",
-            "program": "${workspaceFolder}\\build\\${relativeFileDirname}.exe",
+            "program": "${workspaceFolder}\\build\\${relativeFileDirname}-debug.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
