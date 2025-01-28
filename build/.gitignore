@@ -1,0 +1,4 @@
+# Ignore to synch everything in this directory
+*
+# Except this file
+!.gitignore
