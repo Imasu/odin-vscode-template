@@ -146,14 +146,81 @@ int main() {
 	printf("-- Fin Scope 0 --\n");
 }
 ```
+Résultat:  
+```
+-- Scope 0 Début --
+Container constructor (null, init to 2 elements): 0x7ffdb800eba0
+--Element constructor with value: 0x7ffdb800eb70
+--Element destructor: 0x7ffdb800eb70
+--Element constructor with value: 0x7ffdb800eb70
+--Element destructor: 0x5d8722be66c0
+--Element destructor: 0x7ffdb800eb70
+e0.m_value: 0
+e0.vector: 0x5d8722be66e0 = 1, 2
+
+-- Scope 1 Début --
+Container constructor with value (with 3 elements): 0x7ffdb800ebe0
+--Element constructor with value: 0x7ffdb800eb70
+--Element destructor: 0x7ffdb800eb70
+--Element constructor with value: 0x7ffdb800eb70
+--Element destructor: 0x5d8722be66c0
+--Element destructor: 0x7ffdb800eb70
+--Element constructor with value: 0x7ffdb800eb70
+--Element destructor: 0x5d8722be6700
+--Element destructor: 0x5d8722be6708
+--Element destructor: 0x7ffdb800eb70
+e1.m_value: 1
+e1.vector: 0x5d8722be6720 = 1, 2, 3
+-- Fin Scope 1 --
+Container destruction: 0x7ffdb800ebe0
+--Element destructor: 0x5d8722be6720
+--Element destructor: 0x5d8722be6728
+--Element destructor: 0x5d8722be6730
+
+-- Scope 2 Début --
+Container constructor with value (with 3 elements): 0x7ffdb800ebc0
+--Element constructor with value: 0x7ffdb800eb70
+--Element destructor: 0x7ffdb800eb70
+--Element constructor with value: 0x7ffdb800eb70
+--Element destructor: 0x5d8722be6700
+--Element destructor: 0x7ffdb800eb70
+--Element constructor with value: 0x7ffdb800eb70
+--Element destructor: 0x5d8722be66c0
+--Element destructor: 0x5d8722be66c8
+--Element destructor: 0x7ffdb800eb70
+Container copy constructor (+4th element): 0x7ffdb800ebe0
+--Element constructor with value: 0x7ffdb800eb60
+--Element destructor: 0x5d8722be66c0
+--Element destructor: 0x5d8722be66c8
+--Element destructor: 0x5d8722be66d0
+--Element destructor: 0x7ffdb800eb60
+e2.m_value: 42
+e3.m_value: 42
+e2.vector: 0x5d8722be6720 = 1, 2, 3
+e3.vector: 0x5d8722be6750 = 1, 2, 3, 4
+-- Fin Scope 2 --
+Container destruction: 0x7ffdb800ebe0
+--Element destructor: 0x5d8722be6750
+--Element destructor: 0x5d8722be6758
+--Element destructor: 0x5d8722be6760
+--Element destructor: 0x5d8722be6768
+Container destruction: 0x7ffdb800ebc0
+--Element destructor: 0x5d8722be6720
+--Element destructor: 0x5d8722be6728
+--Element destructor: 0x5d8722be6730
+-- Fin Scope 0 --
+Container destruction: 0x7ffdb800eba0
+--Element destructor: 0x5d8722be66e0
+--Element destructor: 0x5d8722be66e8
+```
+
+<br><br><br>
 
 ## Code Odin
-
+Utilisation de struct et de tableay dynamique avec création des méthodes de libération de la mémoire.  
 ```
 package cpp_exemple
-
 import "core:fmt"
-
 
 Element :: struct {
 	value: int,
@@ -251,4 +318,99 @@ main :: proc() {
 }
 
 ```
-
+Résultat:  
+```
+-- Scope 0 Début --
+e0.value: 0
+e0.vector: 0x7FFFFFFFD418 = 
+-- Scope 1 Début --
+Container_make with value (with 3 elements): 1
+e1.value: 1
+e1.vector: 0x7FFFFFFFD388 = 1, 2, 3
+-- Fin Scope 1 --
+Container_delete: 1
+--Element_delete: 1
+-- Scope 0 Début --
+e0.value: 0
+e0.vector: 0x7FFFFFFFD418 = 
+-- Scope 1 Début --
+Container_make with value (with 3 elements): 1
+e1.value: 1
+e1.vector: 0x7FFFFFFFD388 = 1, 2, 3
+-- Fin Scope 1 --
+Container_delete: 1
+--Element_delete: 1
+--Element_delete: 2
+--Element_delete: 3
+-- Scope 2 Début --
+Container_make with value (with 3 elements): 2
+Container_copy + 4th element: 2
+e2.value: 2
+e2.vector: 0x7FFFFFFFD318 = 1, 2, 3
+e3.value: 2
+e3.vector: 0x7FFFFFFFD2B8 = 1, 2, 3, 4
+-- Fin Scope 2 --
+Container_delete: 2
+--Element_delete: 1
+--Element_delete: 2
+--Element_delete: 3
+--Element_delete: 4
+-- Scope 0 Début --
+e0.value: 0
+e0.vector: 0x7FFFFFFFD418 = 
+-- Scope 1 Début --
+Container_make with value (with 3 elements): 1
+e1.value: 1
+e1.vector: 0x7FFFFFFFD388 = 1, 2, 3
+-- Fin Scope 1 --
+Container_delete: 1
+--Element_delete: 1
+--Element_delete: 2
+--Element_delete: 3
+-- Scope 2 Début --
+Container_make with value (with 3 elements): 2
+Container_copy + 4th element: 2
+e2.value: 2
+e2.vector: 0x7FFFFFFFD318 = 1, 2, 3
+e3.value: 2
+e3.vector: 0x7FFFFFFFD2B8 = 1, 2, 3, 4
+update e3 value to 3
+-- Fin Scope 2 --
+Container_delete: 3
+--Element_delete: 1
+--Element_delete: 2
+--Element_delete: 3
+--Element_delete: 4
+-- Scope 0 Début --
+e0.value: 0
+e0.vector: 0x7FFFFFFFD418 = 
+-- Scope 1 Début --
+Container_make with value (with 3 elements): 1
+e1.value: 1
+e1.vector: 0x7FFFFFFFD388 = 1, 2, 3
+-- Fin Scope 1 --
+Container_delete: 1
+--Element_delete: 1
+--Element_delete: 2
+--Element_delete: 3
+-- Scope 2 Début --
+Container_make with value (with 3 elements): 2
+Container_copy + 4th element: 2
+e2.value: 2
+e2.vector: 0x7FFFFFFFD318 = 1, 2, 3
+e3.value: 2
+e3.vector: 0x7FFFFFFFD2B8 = 1, 2, 3, 4
+update e3 value to 3
+-- Fin Scope 2 --
+Container_delete: 3
+--Element_delete: 1
+--Element_delete: 2
+--Element_delete: 3
+--Element_delete: 4
+Container_delete: 2
+--Element_delete: 1
+--Element_delete: 2
+--Element_delete: 3
+-- Fin Scope 0 --
+Container_delete: 0
+```
